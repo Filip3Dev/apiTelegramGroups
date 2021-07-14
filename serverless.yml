@@ -13,7 +13,7 @@
 
 service: apibet
 app: apibet
-org: filipwx7
+org: financebit
 frameworkVersion: "2"
 
 provider:
@@ -63,6 +63,12 @@ functions:
       - http:
           path: /listChats
           method: get
+  saveMonitor:
+    handler: handler.saveMonitor
+    events:
+      - http:
+          path: /saveMonitor
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -111,3 +117,6 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+plugins:
+  - serverless-offline
+  - serverless-dotenv-plugin
