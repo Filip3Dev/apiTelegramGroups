@@ -69,6 +69,12 @@ functions:
       - http:
           path: /listSent
           method: get
+  saveBets:
+    handler: handler.saveBets
+    events:
+      - http:
+          path: /saveBets
+          method: post
   saveMonitor:
     handler: handler.saveMonitor
     events:
