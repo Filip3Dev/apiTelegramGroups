@@ -14,9 +14,10 @@
     "serverless-offline": "^7.0.0"
   },
   "dependencies": {
-    "mongoose": "^5.13.2",
     "axios": "^0.21.1",
+    "date-fns": "^2.23.0",
     "dotenv": "^10.0.0",
+    "mongoose": "^5.13.2",
     "node-telegram-bot-api": "^0.53.0"
   }
 }
