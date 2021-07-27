@@ -1,23 +1,36 @@
 'use strict';
 const { v4: uuidv4 } = require('uuid');
 const connectToDatabase = require("./db");
-const Order = require('./model/Order');
+const Order = require('./models/Order');
+const GroupsList = require('./models/Teste');
+const Monitor = require('./models/Monitor');
 
-module.exports.listChats = async event => {
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE'
+};
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+module.exports.listChats = async () => {
+  await connectToDatabase();
+  let list_orders = await GroupsList.find({}).lean();
+  return { statusCode: 200, headers, body: JSON.stringify(list_orders) };
+};
+
+module.exports.saveMonitor = async event => {
+  try {
+    const { chat } = event.queryStringParameters;
+    await connectToDatabase();
+    let item = await GroupsList.findOne({ _id: chat }).lean();
+    item.chat = item._id;
+    delete item._id;
+    let list_orders = new Monitor(item);
+    await list_orders.save();
+    return { statusCode: 200, headers, body: JSON.stringify(list_orders) };
+  } catch (error) {
+    console.log(error);
+    return { statusCode: 200, headers, body: JSON.stringify({ error: true }) };
+  }
 };
 
 module.exports.saveBets = async event => {

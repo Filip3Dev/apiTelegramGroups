@@ -13,7 +13,7 @@
 
 service: apibet
 app: apibet
-org: filipwx7
+org: financebit
 frameworkVersion: "2"
 
 provider:
@@ -69,6 +69,12 @@ functions:
       - http:
           path: /saveBets
           method: post
+  saveMonitor:
+    handler: handler.saveMonitor
+    events:
+      - http:
+          path: /saveMonitor
+          method: get
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
